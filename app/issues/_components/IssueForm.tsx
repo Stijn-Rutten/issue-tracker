@@ -6,7 +6,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createIssueSchema } from "@/app/validationSchemas";
+import { issueSchema } from "@/app/validationSchemas";
 import { z } from "zod";
 import dynamic from "next/dynamic";
 import { ErrorMessage, Spinner } from "@/app/components";
@@ -16,7 +16,7 @@ const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
   ssr: false,
 });
 
-type IssueFormData = z.infer<typeof createIssueSchema>;
+type IssueFormData = z.infer<typeof issueSchema>;
 
 const IssueForm = ({ issue }: { issue?: Issue }) => {
   const {
@@ -25,7 +25,7 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
     handleSubmit,
     formState: { isSubmitted, isValid, errors },
   } = useForm<IssueFormData>({
-    resolver: zodResolver(createIssueSchema),
+    resolver: zodResolver(issueSchema),
   });
 
   const router = useRouter();
@@ -35,7 +35,8 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
   const submitIssue = async (data: IssueFormData) => {
     try {
       setIsSubmitting(true);
-      await axios.post("/api/issues", data);
+      if (issue) await axios.patch(`/api/issues/${issue.id}`, data);
+      else await axios.post("/api/issues", data);
       router.push("/issues");
     } catch (error) {
       setError("An error occurred");
@@ -68,7 +69,7 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
         ></Controller>
         <ErrorMessage> {errors.description?.message} </ErrorMessage>
         <Button disabled={(isSubmitted && !isValid) || isSubmitting}>
-          Submit
+          {issue ? "Update Issue" : "Submit"}
           {isSubmitting && <Spinner />}
         </Button>
       </form>
