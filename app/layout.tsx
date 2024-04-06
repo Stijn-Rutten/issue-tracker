@@ -7,6 +7,7 @@ import "@radix-ui/themes/styles.css";
 import { Container, Theme } from "@radix-ui/themes";
 import AuthProvider from "./auth/Provider";
 import QueryClientProvider from "./QueryClientProvider";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
@@ -32,6 +33,7 @@ export default function RootLayout({
               </main>
             </Theme>
           </AuthProvider>
+          <ReactQueryDevtools />
         </QueryClientProvider>
       </body>
     </html>
