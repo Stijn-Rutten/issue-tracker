@@ -63,6 +63,7 @@ const NavBar = () => {
                     fallback="?"
                     radius="full"
                     size="2"
+                    referrerPolicy="no-referrer"
                   />
                 </DropdownMenu.Trigger>
                 <DropdownMenu.Content>
