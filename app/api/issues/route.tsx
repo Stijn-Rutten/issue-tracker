@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
 const createIssueSchema = z.object({
-  title: z.string().max(255),
+  title: z.string().min(1).max(255),
   description: z.string().min(1),
 });
 
@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
   const validation = await createIssueSchema.safeParseAsync(body);
 
   if (!validation.success) {
-    return new Response(JSON.stringify(validation.error.errors), {
+    return new Response(JSON.stringify(validation.error.format()), {
       status: 400,
     });
   }
