@@ -1,28 +1,28 @@
-import prisma from "@/prisma/client";
-import IssueSummary from "./IssueSummary";
-import LatestIssues from "./LatestIssues";
-import IssueChart from "./IssueChart";
-import { Flex, Grid } from "@radix-ui/themes";
-import { Metadata } from "next";
+import prisma from '@/prisma/client';
+import IssueSummary from './IssueSummary';
+import LatestIssues from './LatestIssues';
+import IssueChart from './IssueChart';
+import { Flex, Grid } from '@radix-ui/themes';
+import { Metadata } from 'next';
 
 const Home = async () => {
-  const open = await prisma.issue.count({ where: { status: "OPEN" } });
+  const open = await prisma.issue.count({ where: { status: 'OPEN' } });
   const inProgress = await prisma.issue.count({
-    where: { status: "IN_PROGRESS" },
+    where: { status: 'IN_PROGRESS' },
   });
   const closed = await prisma.issue.count({
-    where: { status: "CLOSED" },
+    where: { status: 'CLOSED' },
   });
 
   return (
     <Grid
       columns={{
-        initial: "1",
-        md: "2",
+        initial: '1',
+        md: '2',
       }}
-      gap="5"
+      gap='5'
     >
-      <Flex direction="column" gap="5">
+      <Flex direction='column' gap='5'>
         <IssueSummary open={open} inProgress={inProgress} closed={closed} />
         <IssueChart open={open} inProgress={inProgress} closed={closed} />
       </Flex>
@@ -33,6 +33,6 @@ const Home = async () => {
 
 export default Home;
 export const metadata: Metadata = {
-  title: "Issue Tracker - Dashboard",
-  description: "View a summary of project issues.",
+  title: 'Issue Tracker - Dashboard',
+  description: 'View a summary of project issues.',
 };

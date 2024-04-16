@@ -1,9 +1,9 @@
-"use client";
-import { Spinner } from "@/app/components";
-import { AlertDialog, Button, Flex } from "@radix-ui/themes";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+'use client';
+import { Spinner } from '@/app/components';
+import { AlertDialog, Button, Flex } from '@radix-ui/themes';
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 const DeleteIssueButton = ({ id }: { id: number }) => {
   const router = useRouter();
@@ -14,7 +14,7 @@ const DeleteIssueButton = ({ id }: { id: number }) => {
     setIsLoading(true);
     try {
       await axios.delete(`/api/issues/${id}`);
-      router.push("/issues/list");
+      router.push('/issues/list');
       router.refresh();
     } catch (error) {
       setError(true);
@@ -27,7 +27,7 @@ const DeleteIssueButton = ({ id }: { id: number }) => {
     <>
       <AlertDialog.Root>
         <AlertDialog.Trigger>
-          <Button color="red" disabled={isLoading}>
+          <Button color='red' disabled={isLoading}>
             Delete Issue {isLoading && <Spinner />}
           </Button>
         </AlertDialog.Trigger>
@@ -37,14 +37,14 @@ const DeleteIssueButton = ({ id }: { id: number }) => {
             You are about to delete this issue. Are you sure you want to do
             this? This action cannot be undone.
           </AlertDialog.Description>
-          <Flex mt="4" gap="3" justify="end">
+          <Flex mt='4' gap='3' justify='end'>
             <AlertDialog.Cancel>
-              <Button variant="soft" color="gray">
+              <Button variant='soft' color='gray'>
                 Cancel
               </Button>
             </AlertDialog.Cancel>
             <AlertDialog.Action>
-              <Button color="red" onClick={deleteIssue}>
+              <Button color='red' onClick={deleteIssue}>
                 Delete Issue
               </Button>
             </AlertDialog.Action>
@@ -57,11 +57,11 @@ const DeleteIssueButton = ({ id }: { id: number }) => {
           <AlertDialog.Description>
             This issue could not be deleted.
           </AlertDialog.Description>
-          <Flex justify="end">
+          <Flex justify='end'>
             <Button
-              color="gray"
-              variant="soft"
-              mt="2"
+              color='gray'
+              variant='soft'
+              mt='2'
               onClick={() => setError(false)}
             >
               Ok

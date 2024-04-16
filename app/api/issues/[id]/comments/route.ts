@@ -1,8 +1,8 @@
-import authOptions from "@/app/auth/authOptions";
-import { commentSchema } from "@/app/validationSchemas";
-import prisma from "@/prisma/client";
-import { getServerSession } from "next-auth";
-import { NextRequest, NextResponse } from "next/server";
+import authOptions from '@/app/auth/authOptions';
+import { commentSchema } from '@/app/validationSchemas';
+import prisma from '@/prisma/client';
+import { getServerSession } from 'next-auth';
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(
   request: NextRequest,
@@ -23,14 +23,14 @@ export async function POST(
   });
 
   if (!author)
-    return NextResponse.json({ error: "Invalid author." }, { status: 400 });
+    return NextResponse.json({ error: 'Invalid author.' }, { status: 400 });
 
   const issue = await prisma.issue.findUnique({
     where: { id: +id },
   });
 
   if (!issue)
-    return NextResponse.json({ error: "Invalid issue" }, { status: 404 });
+    return NextResponse.json({ error: 'Invalid issue' }, { status: 404 });
 
   const comment = await prisma.comment.create({
     data: {

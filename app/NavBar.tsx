@@ -1,9 +1,9 @@
-"use client";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { AiFillBug } from "react-icons/ai";
-import classNames from "classnames";
-import { useSession } from "next-auth/react";
+'use client';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { AiFillBug } from 'react-icons/ai';
+import classNames from 'classnames';
+import { useSession } from 'next-auth/react';
 import {
   Avatar,
   Box,
@@ -11,16 +11,16 @@ import {
   DropdownMenu,
   Flex,
   Text,
-} from "@radix-ui/themes";
-import { Skeleton } from "@/app/components";
+} from '@radix-ui/themes';
+import { Skeleton } from '@/app/components';
 
 const NavBar = () => {
   return (
-    <nav className="border-b mb-5 px-5 py-3">
+    <nav className='mb-5 border-b px-5 py-3'>
       <Container>
-        <Flex justify="between">
-          <Flex align="center" gap="3">
-            <Link href="/">
+        <Flex justify='between'>
+          <Flex align='center' gap='3'>
+            <Link href='/'>
               <AiFillBug />
             </Link>
             <NavLinks />
@@ -35,25 +35,25 @@ const NavBar = () => {
 const NavLinks = () => {
   const links = [
     {
-      label: "Dashboard",
-      href: "/",
+      label: 'Dashboard',
+      href: '/',
     },
     {
-      label: "Issues",
-      href: "/issues/list",
+      label: 'Issues',
+      href: '/issues/list',
     },
   ];
 
   const currentPath = usePathname();
 
   return (
-    <ul className="flex space-x-6 ">
+    <ul className='flex space-x-6 '>
       {links.map((link) => (
         <li key={link.label}>
           <Link
             className={classNames({
-              "nav-link": true,
-              "!text-zinc-900": currentPath === link.href,
+              'nav-link': true,
+              '!text-zinc-900': currentPath === link.href,
             })}
             href={link.href}
           >
@@ -68,11 +68,11 @@ const NavLinks = () => {
 const AuthStatus = () => {
   const { status, data: session } = useSession();
 
-  if (status === "loading") return <Skeleton width="3rem" />;
+  if (status === 'loading') return <Skeleton width='3rem' />;
 
-  if (status === "unauthenticated")
+  if (status === 'unauthenticated')
     return (
-      <Link href="/api/auth/signin" className="nav-link">
+      <Link href='/api/auth/signin' className='nav-link'>
         Log in
       </Link>
     );
@@ -82,20 +82,20 @@ const AuthStatus = () => {
       <DropdownMenu.Root>
         <DropdownMenu.Trigger>
           <Avatar
-            className="cursor-pointer"
+            className='cursor-pointer'
             src={session!.user?.image!}
-            fallback="?"
-            radius="full"
-            size="2"
-            referrerPolicy="no-referrer"
+            fallback='?'
+            radius='full'
+            size='2'
+            referrerPolicy='no-referrer'
           />
         </DropdownMenu.Trigger>
         <DropdownMenu.Content>
           <DropdownMenu.Label>
-            <Text size="2">{session!.user?.email}</Text>
+            <Text size='2'>{session!.user?.email}</Text>
           </DropdownMenu.Label>
           <DropdownMenu.Item>
-            <Link href="/api/auth/signout">Log out</Link>
+            <Link href='/api/auth/signout'>Log out</Link>
           </DropdownMenu.Item>
         </DropdownMenu.Content>
       </DropdownMenu.Root>

@@ -1,10 +1,10 @@
-import prisma from "@/prisma/client";
-import IssueActions from "./IssueActions";
-import { Issue, Status } from "@prisma/client";
-import Pagination from "@/app/components/Pagination";
-import IssueTable, { columnNames, IssueQuery } from "./IssueTable";
-import { Flex } from "@radix-ui/themes";
-import { Metadata } from "next";
+import prisma from '@/prisma/client';
+import IssueActions from './IssueActions';
+import { Issue, Status } from '@prisma/client';
+import Pagination from '@/app/components/Pagination';
+import IssueTable, { columnNames, IssueQuery } from './IssueTable';
+import { Flex } from '@radix-ui/themes';
+import { Metadata } from 'next';
 
 interface Props {
   searchParams: IssueQuery;
@@ -16,7 +16,7 @@ const IssuesPage = async ({ searchParams }: Props) => {
     : undefined;
 
   const orderBy = columnNames.includes(searchParams.orderBy)
-    ? { [searchParams.orderBy]: "asc" }
+    ? { [searchParams.orderBy]: 'asc' }
     : undefined;
 
   const where = { status };
@@ -34,7 +34,7 @@ const IssuesPage = async ({ searchParams }: Props) => {
   const issueCount = await prisma.issue.count({ where });
 
   return (
-    <Flex direction="column" gap="3">
+    <Flex direction='column' gap='3'>
       <IssueActions />
       <IssueTable issues={issues} searchParams={searchParams}></IssueTable>
       <Pagination
@@ -46,9 +46,9 @@ const IssuesPage = async ({ searchParams }: Props) => {
   );
 };
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 export default IssuesPage;
 export const metadata: Metadata = {
-  title: "Issue Tracker - Issues",
-  description: "View all proeject issues.",
+  title: 'Issue Tracker - Issues',
+  description: 'View all proeject issues.',
 };
