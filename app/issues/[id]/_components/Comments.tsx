@@ -3,6 +3,7 @@ import { Avatar, Box, Card, Flex, Heading, Text } from '@radix-ui/themes';
 import dynamic from 'next/dynamic';
 import React from 'react';
 import CommentFormSkeleton from './CommentFormSkeleton';
+import ReactMarkdown from 'react-markdown';
 
 const CommentForm = dynamic(
   () => import('@/app/issues/[id]/_components/CommentForm'),
@@ -22,11 +23,7 @@ interface Props {
 
 const Comments = ({ issue }: Props) => {
   return (
-    <Box width='100%'>
-      <Heading size='5' mb='3'>
-        Comments
-      </Heading>
-      <CommentForm id={issue.id} />
+    <Flex direction='column' gap='3' width='100%'>
       <ul>
         {issue.comments.map((comment) => (
           <li key={comment.id}>
@@ -49,7 +46,9 @@ const Comments = ({ issue }: Props) => {
                     </Text>
                   </Flex>
                   <Text as='div' size='2' color='gray'>
-                    {comment.content}
+                    <ReactMarkdown className='prose max-w-full'>
+                      {comment.content}
+                    </ReactMarkdown>
                   </Text>
                 </Box>
               </Flex>
@@ -57,7 +56,8 @@ const Comments = ({ issue }: Props) => {
           </li>
         ))}
       </ul>
-    </Box>
+      <CommentForm id={issue.id} />
+    </Flex>
   );
 };
 

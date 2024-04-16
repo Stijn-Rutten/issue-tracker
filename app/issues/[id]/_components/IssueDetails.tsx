@@ -7,10 +7,12 @@ import ReactMarkdown from 'react-markdown';
 const IssueDetails = ({ issue }: { issue: Issue }) => {
   return (
     <>
-      <Heading>{issue.title}</Heading>
-      <Flex className='space-x-3' my='2'>
-        <IssueStatusBadge status={issue.status} />
-        <Text>{issue.createdAt.toDateString()}</Text>
+      <Flex justify='between'>
+        <Heading>{issue.title}</Heading>
+        <Flex className='space-x-3'>
+          <IssueStatusBadge status={issue.status} />
+          <Text color='gray'>{issue.createdAt.toDateString()}</Text>
+        </Flex>
       </Flex>
       <Card mt='4'>
         <ReactMarkdown className='prose max-w-full'>

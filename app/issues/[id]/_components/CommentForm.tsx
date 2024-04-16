@@ -2,11 +2,9 @@
 import { ErrorMessage } from '@/app/components';
 import { commentSchema } from '@/app/validationSchemas';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Issue } from '@prisma/client';
 import { Button, Callout, Spinner } from '@radix-ui/themes';
 import axios from 'axios';
 import 'easymde/dist/easymde.min.css';
-import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import SimpleMDE from 'react-simplemde-editor';
@@ -16,7 +14,6 @@ type CommentFormData = z.infer<typeof commentSchema>;
 
 const CommentForm = ({ id }: { id: number }) => {
   const {
-    register,
     control,
     handleSubmit,
     formState: { isSubmitted, isValid, errors },
@@ -24,7 +21,6 @@ const CommentForm = ({ id }: { id: number }) => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
-  const { data: session } = useSession();
 
   const submitComment = async (data: CommentFormData) => {
     try {

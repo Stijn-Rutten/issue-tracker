@@ -44,6 +44,7 @@ const IssueDetailsPage = async ({ params: { id } }: Props) => {
       >
         <Flex direction='column' gap='5' className='md:col-span-4'>
           <IssueDetails issue={issue} />
+          <hr />
           <Comments issue={issue} />
         </Flex>
         {session && (
