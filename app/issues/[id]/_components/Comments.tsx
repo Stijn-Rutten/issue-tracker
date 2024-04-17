@@ -4,6 +4,8 @@ import dynamic from 'next/dynamic';
 import React from 'react';
 import CommentFormSkeleton from './CommentFormSkeleton';
 import ReactMarkdown from 'react-markdown';
+import { getServerSession } from 'next-auth';
+import authOptions from '@/app/auth/authOptions';
 
 const CommentForm = dynamic(
   () => import('@/app/issues/[id]/_components/CommentForm'),
@@ -21,7 +23,9 @@ interface Props {
   issue: IssueWithCommentsAndAuthor;
 }
 
-const Comments = ({ issue }: Props) => {
+const Comments = async ({ issue }: Props) => {
+  const session = await getServerSession(authOptions);
+  console.log(session);
   return (
     <Flex direction='column' gap='3' width='100%'>
       <ul>
@@ -56,7 +60,7 @@ const Comments = ({ issue }: Props) => {
           </li>
         ))}
       </ul>
-      <CommentForm id={issue.id} />
+      {session && <CommentForm id={issue.id} />}
     </Flex>
   );
 };
