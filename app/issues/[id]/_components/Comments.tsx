@@ -25,7 +25,6 @@ interface Props {
 
 const Comments = async ({ issue }: Props) => {
   const session = await getServerSession(authOptions);
-  console.log(session);
   return (
     <Flex direction='column' gap='3' width='100%'>
       <ul>

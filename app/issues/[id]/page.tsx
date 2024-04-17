@@ -10,6 +10,7 @@ import AssigneeSelect from './_components/AssigneeSelect';
 import { cache } from 'react';
 import Comments from './_components/Comments';
 import PostComment from './_components/CommentForm';
+import ChangeIssueStatusButtons from './_components/ChangeIssueStatusButtons';
 
 interface Props {
   params: { id: string };
@@ -19,6 +20,7 @@ const fetchIssues = cache((id: number) =>
   prisma.issue.findUnique({
     where: { id },
     include: {
+      assignedToUser: true,
       comments: {
         include: { author: true },
       },
@@ -50,6 +52,9 @@ const IssueDetailsPage = async ({ params: { id } }: Props) => {
         {session && (
           <Flex direction='column' gap='4'>
             <AssigneeSelect issue={issue} />
+            {session.user?.email === issue.assignedToUser?.email && (
+              <ChangeIssueStatusButtons issue={issue} />
+            )}
             <EditIssueButton id={issue.id} />
             <DeleteIssueButton id={issue.id} />
           </Flex>

@@ -4,6 +4,7 @@ import useUsers from '@/app/issues/hooks/useUsers';
 import { Issue } from '@prisma/client';
 import { Select } from '@radix-ui/themes';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 
@@ -14,6 +15,7 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
   const [latestAssignedUserId, setLatestAssignedUserId] = useState(
     issue.assignedToUserId
   );
+  const router = useRouter();
 
   useEffect(() => {
     if (assignedUserId === null || assignedUserId === latestAssignedUserId) {
@@ -29,12 +31,13 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
       .then(() => {
         setLatestAssignedUserId(assignedUserId);
         if (assignedUserId === 'unassigned') setAssignedUserId(null);
+        router.refresh();
       })
       .catch(() => {
         toast.error('Changes could not be saved');
         setAssignedUserId(latestAssignedUserId);
       });
-  }, [assignedUserId, latestAssignedUserId, issue]);
+  }, [assignedUserId, latestAssignedUserId, issue, router]);
 
   if (isLoading) return <Skeleton height='2rem' />;
 
