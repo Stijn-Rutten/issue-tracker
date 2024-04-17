@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "format": "prettier --check --ignore-path .gitignore .",
-    "format:fix": "prettier --write --ignore-path .gitignore ."
+    "format:fix": "prettier --write --ignore-path .gitignore .",
+    "e2e": "npx playwright test"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
@@ -38,6 +39,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@playwright/test": "^1.43.1",
     "@tailwindcss/typography": "^0.5.12",
     "@types/node": "^20",
     "@types/react": "^18",
